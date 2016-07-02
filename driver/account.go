@@ -121,21 +121,17 @@ func (a *account) checkName() {
 }
 
 func (a *account) needGender() {
-	a.Respond("What gender would you like your character to be?\n\n\tF - Female\n\tM - Male\n")
+	a.Respond("What gender would you like your character to be?")
 	a.next = a.checkGender
 }
 
 func (a *account) checkGender() {
-	switch strings.ToUpper(a.input) {
-	case "M", "MALE":
-		a.gender = "male"
-	case "F", "FEMALE":
-		a.gender = "female"
-	default:
-		a.Respond("[RED]Please enter M, F, Male or Female.")
+	if (a.input == ""){
+		a.Respond("[RED]Please enter a gender. \"None\" is an option.")
 		a.needGender()
 		return
 	}
+	a.gender = strings.ToLower(a.input)
 
 	a.create()
 }
